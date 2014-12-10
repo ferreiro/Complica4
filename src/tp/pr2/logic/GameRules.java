@@ -1,20 +1,20 @@
 package tp.pr2.logic;
   
 public interface GameRules {
- 
-	//iniciaTablero() 
-	public void initialBoard();
+
+	// Build a board that is to be used in the game, according to the rules of that game.
+	public Board newBoard();
+
+	// Consulta si hay empate. tablas(Ficha ultimoEnPoner, Tablero t) 
+	public boolean isDraw(Counter lastMove, Board b);
 	
-	//hayGanador(Movimiento ultimoMovimiento, Tablero t)
-	public boolean isWinner(Move lastMovement, Board board);
+	// Checks whether or not, with the current board, one of the players has won and, if so, returns the colour of the winner
+	public Counter winningMove(Move lastMove, Board b);
 	
 	//jugadorInicial()
 	public Counter initialPLayer();
 	
-	//siguienteTurno(Ficha ultimoEnPoner, Tablero t) devuelve el color del siguiente turno
-	public Counter nextTurn(Counter lastPLayerMoving, Board board);
-	
-	//tablas(Ficha ultimoEnPoner, Tablero t) indica si ha acabado en tablas
-	public boolean tie(Counter lastPLayerMoving, Board board);
+	// Returns the colour of the player whose turn it is.
+	public Counter nextTurn(Counter lastMove, Board b);
 	
 }

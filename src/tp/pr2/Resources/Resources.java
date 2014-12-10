@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 import tp.pr2.logic.Board;
 import tp.pr2.logic.Counter;
-import tp.pr2.logic.Game;
+import tp.pr2.logic.Game; 
 
 public class Resources {
 	
@@ -48,6 +48,20 @@ public class Resources {
 		}
 		return row;
 	}
+	
+
+//	
+//	Para cuando cojamos del teclado.
+//	
+//	String[] words = line.split(" ");
+//	Example: play co
+//			 play c4
+//			 
+//			 make a move 
+//			 words[0] (make)
+//			 words[1] (a)
+//			 words[2] (move)
+//	
 	
 	public static int menu(Game game, Scanner input) {
 		int option = - 1;

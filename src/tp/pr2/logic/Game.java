@@ -13,18 +13,27 @@ public class Game {
 	private boolean finished;
 	private Move[] stack;
 	private int numUndo = 0; // si eso cambiamos la inicializacion
+	private GameRules rules;
+	
+	 
 	
 	
 	
 	//Partida(ReglasJuego reglas)
 	public Game(GameRules rules) {
-		
-		
+		// reset function
+		reset(rules);
 	}
 	
 	//ejecutaMovimiento(Movimiento mov)
-	public void executeMove(Move mov){
-		mov.executeMove(board);
+	public boolean executeMove(Move mov){
+		boolean valid;
+
+		valid = mov.executeMove(board);
+		// Comprobar horizontal, vertical, diagonal...
+		
+		
+		return valid;
 	}
 	
 	public Counter getWinner(){
@@ -45,7 +54,7 @@ public class Game {
 	
 	//reset(ReglasJuego reglas) reinicia las reglas del juego
 	public void reset(GameRules rules){
-		
+		rules.newBoard();	
 	}
 	
 	public boolean undo(){
