@@ -38,4 +38,3 @@ public class MoveConnect4 extends Move {
 		board.setPosition(columnToUndo, rowToUndo, Counter.EMPTY);
 	}
 }
-
