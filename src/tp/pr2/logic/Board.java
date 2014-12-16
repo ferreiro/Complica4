@@ -113,8 +113,6 @@ public class Board {
 		
 		line += "|"; 
 		
-		
-	
 		for (int x = 1; x <= width; x++) 
 		{	
 			if (getPosition(x, y) == Counter.EMPTY) 

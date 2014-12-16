@@ -27,7 +27,7 @@ public class MoveComplica extends Move{
 						}
 					}
 					else {
-						lostMove = board.getPosition(column, board.getHeight()); 
+						lostMove = board.getPosition(column, board.getHeight() - 1); 
 						Resources.moveColumnDown(board, column);
 						board.setPosition(column, 0, currentPlayer);
 					}
@@ -41,17 +41,16 @@ public class MoveComplica extends Move{
 		columnToUndo = column;
 //		rowToUndo = Resources.occupiedRowPosition(board, columnToUndo); 
 //		board.setPosition(columnToUndo, rowToUndo, Counter.EMPTY);
-		if (lostMove == Counter.EMPTY){
+		if (lostMove == Counter.EMPTY) {
 			rowToUndo = Resources.occupiedRowPosition(board, columnToUndo); 
 			board.setPosition(columnToUndo, rowToUndo, Counter.EMPTY);
 		}
 		else {
-			
+			Resources.moveColumnUp(board, column);
+			board.setPosition(column, board.getHeight() - 1, lostMove);
 		}
 			
 		
 	}
 	
-	
-
 }
