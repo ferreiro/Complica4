@@ -276,97 +276,99 @@ public class Game {
 //	 * 
 //	 */
 //		
-//	public boolean checkDiagonal1() {
-//		boolean isFormed = false;
-//		int y, x, tilesCounter, aux_Y, aux_X, numIterations;
-//		Counter color, nextColor;
-//		
-//		// starting bottom left position
-//		// Checks diagonals until the first cell (1,1)
-//
-//		x = 1; // Always start in the first column
-//		y = 1; // Always start in the last row 
-//		numIterations = y;
-//		
-//		while ((y <= board.getHeight()) && !(isFormed)) {
-//			x = 1;
-//			aux_Y = y;
-//			tilesCounter = 1;
-//			
-//			if (numIterations > board.getWidth())
-//			{
-//				numIterations = board.getWidth();
-//			}
-//			
-//			while ((x < numIterations) && !(isFormed)) {
-//				color = board.getPosition(x, aux_Y);
-//				nextColor = board.getPosition(x + 1, aux_Y - 1);
-//				
-//				if ((color == nextColor) && (color != Counter.EMPTY)) {
-//					tilesCounter++;
-//					if (tilesCounter == Resources.TILES_TO_WIN) {
-//						isFormed = true;
-//						finished = true;
-//						winner = color;
-//					}
-//				}
-//				else
-//				{
-//					tilesCounter = 1;
-//				}	
-//				aux_Y--;
-//				x++;
-//			}			
-//			y++;
-//			numIterations++;
-//		}
-//		
-//		if (!isFormed) {
-//			// starting at (height, height) ex: (5,5)
-//			// Checks from bottom to top right
-//	 
-//			y = board.getHeight(); // Always start in the last row
-//			x = board.getWidth(); // Always start in the first column; pero aqui ponia getHeight no Width
-//			color = board.getPosition(x, y);
-//			int counter = 1;
-//			
-//			while ((x > 1) && !(isFormed)) {
-//				y = board.getHeight();
-//				aux_X = x;
-//				tilesCounter = 1;
-//				numIterations = board.getWidth() - x + 1;
-//				if (numIterations > board.getHeight())
-//				{
-//					numIterations = board.getHeight();
-//				}
-//				counter = 1;
-//				while ((counter < numIterations) && !(isFormed)) {
-//					color = board.getPosition(aux_X, y);
-//					nextColor = board.getPosition(aux_X + 1, y - 1);
-//					
-//					if ((color == nextColor) && (color != Counter.EMPTY)) {
-//						tilesCounter++;
-//						if (tilesCounter == Resources.TILES_TO_WIN) {
-//							isFormed = true;
-//							finished = true;
-//							winner = color;
-//						}
-//					}
-//					else
-//					{
-//						tilesCounter = 1;
-//					}	
-//					y--;
-//					aux_X++;
-//					
-//					counter++;
-//				}			
-//				x--;
-//			}			
-//		}
-//		
-//		return isFormed;
-//	}	
+	public boolean checkDiagonal1(Connect4Rules rules) {
+		boolean isFormed = false;
+		int y, x, tilesCounter, aux_Y, aux_X, numIterations;
+		Counter color, nextColor;
+		int dimX = Resources.DIMX_CONNECT4;
+		int dimY = Resources.DIMY_CONNECT4;
+		
+		// starting bottom left position
+		// Checks diagonals until the first cell (1,1)
+
+		x = 1; // Always start in the first column
+		y = 1; // Always start in the last row 
+		numIterations = y;
+		
+		while ((y <= board.getHeight()) && !(isFormed)) {
+			x = 1;
+			aux_Y = y;
+			tilesCounter = 1;
+			
+			if (numIterations > dimX) //it was with get width so it has to be simX
+			{
+				numIterations = dimX;
+			}
+			
+			while ((x < numIterations) && !(isFormed)) {
+				color = board.getPosition(x, aux_Y);
+				nextColor = board.getPosition(x + 1, aux_Y - 1);
+				
+				if ((color == nextColor) && (color != Counter.EMPTY)) {
+					tilesCounter++;
+					if (tilesCounter == Resources.TILES_TO_WIN) {
+						isFormed = true;
+						finished = true;
+						winner = color;
+					}
+				}
+				else
+				{
+					tilesCounter = 1;
+				}	
+				aux_Y--;
+				x++;
+			}			
+			y++;
+			numIterations++;
+		}
+		
+		if (!isFormed) {
+			// starting at (height, height) ex: (5,5)
+			// Checks from bottom to top right
+	 
+			y = dimY; // Always start in the last row
+			x = dimX; // Always start in the first column; pero aqui ponia getHeight no Width
+			color = board.getPosition(x, y);
+			int counter = 1;
+			
+			while ((x > 1) && !(isFormed)) {
+				y = dimY;
+				aux_X = x;
+				tilesCounter = 1;
+				numIterations = dimX - x + 1;
+				if (numIterations > dimY)
+				{
+					numIterations = dimY;
+				}
+				counter = 1;
+				while ((counter < numIterations) && !(isFormed)) {
+					color = board.getPosition(aux_X, y);
+					nextColor = board.getPosition(aux_X + 1, y - 1);
+					
+					if ((color == nextColor) && (color != Counter.EMPTY)) {
+						tilesCounter++;
+						if (tilesCounter == Resources.TILES_TO_WIN) {
+							isFormed = true;
+							finished = true;
+							winner = color;
+						}
+					}
+					else
+					{
+						tilesCounter = 1;
+					}	
+					y--;
+					aux_X++;
+					
+					counter++;
+				}			
+				x--;
+			}			
+		}
+		
+		return isFormed;
+	}	
 //	
 //	
 //	/***
