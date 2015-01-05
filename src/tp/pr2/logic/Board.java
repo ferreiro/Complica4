@@ -45,8 +45,8 @@ public class Board {
 		board[ty - 1][tx - 1] = counter;
 	}
 	
-	public boolean isFull () {
-		return full;
+	public boolean isFull() {
+		return this.full;
 	}
 	
 	public void setFull() {
