@@ -9,8 +9,6 @@ public class Board {
 	private Counter [][] board;
 	private boolean full;
 	
-	
-	
 	public Board(int tx, int ty){
 		width = tx; // Row
 		height = ty;  // column
@@ -27,11 +25,18 @@ public class Board {
 	public int getHeight(){
 		return height;
 	}
-	
+
 	public int getLength(){
 		return width;
 	}
 	
+	// Añado getWidth para no tener que tocar los algoritmos que comprueban las diagonales.
+	// Como no sé si has usado getLength, pues he dejado los dos.
+	
+	public int getWidth(){
+		return width;
+	}
+
 	public Counter getPosition(int tx, int ty){
 		return Counter.EMPTY;
 	}
@@ -67,15 +72,12 @@ public class Board {
 		}
 	}
 	
-	
 	public void printBoard() {
 		String line = "";
 		
-		for (int y = 1; y <= height; y++) 
-		{
+		for (int y = 1; y <= height; y++) {
 			line = tabLines(y);	
 			System.out.println(line);
-			
 		}	
 
 		line = "";
