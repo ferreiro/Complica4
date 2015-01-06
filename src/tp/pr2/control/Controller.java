@@ -26,7 +26,7 @@ public class Controller {
 		boolean valid = false;
 		boolean undo;
 		String auxStr;
-		Rules gameRules = Rules.CO;
+		Rules gameRules = Rules.C4;
 		Move move = null;
 		
 		do {

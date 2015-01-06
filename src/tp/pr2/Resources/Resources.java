@@ -146,7 +146,6 @@ public static int menu(Game game, Scanner input) {
 				{
 					System.err.println(lowerCaseStr + ": command not understood, please try again");
 				}
-				
 			}
 			else
 			{
