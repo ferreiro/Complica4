@@ -101,7 +101,7 @@ public class Resources {
 			{
 				option = 4;
 			}
-			else if (optionString.equals("PLAY C0"))
+			else if (optionString.equals("PLAY CO"))
 			{
 				option = 5;
 			}
