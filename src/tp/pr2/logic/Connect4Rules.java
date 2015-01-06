@@ -1,29 +1,53 @@
 package tp.pr2.logic;
-
-import tp.pr2.logic.Board;
+ 
 import tp.pr2.Resources.Resources;
+ 
 
-public class ComplicaRules implements GameRules {
-	private int dimx = Resources.DIMX_COMPLICA;
-	private int dimy = Resources.DIMY_COMPLICA;
+public class Connect4Rules implements GameRules {
+	private int dimX = Resources.DIMX_CONNECT4;
+	private int dimY = Resources.DIMY_CONNECT4;
 	private Counter winner;
-
-	// Override
-	// Build a board that is to be used in the game, according to the rules of that game.
+	
+	public Connect4Rules() {  
+		winner = Counter.EMPTY; 
+	}
 	
 	public Board newBoard() {
-		return new Board(dimx, dimy);
+		return new Board(dimX, dimY);	// Return a new board with connect4 dimensions
 	}
-
-	// Override
-	// Consulta si hay empate. tablas(Ficha ultimoEnPoner, Tablero t) 
 	
 	public boolean isDraw(Counter lastMove, Board b) {
-		return false;
+		boolean isDraw = true, won;
+		
+		won = checkHorizontal(b);
+		
+		if (!won) {
+			won = checkVertical(b);
+			if (!won) {
+				won = checkDiagonal1(b);
+				if (!won) {
+					won = checkDiagonal2(b);
+				}
+			}
+		}
+		
+		// Si ha ganado alguien, en conecta no hay empate.
+		// Si no ha ganado nadie, mira si el tablero está lleno. Si lo está, hay empate.
+		
+		if (won) {
+			isDraw = false; // Un jugador ha ganado, por lo que no hay tablas
+		}
+		else {
+			won = b.isFull(); // comprueba si el tablero está lleno (imagino que en complica habrá que cambiarlo.)
+			if (won) {
+				isDraw = true; // empate
+			}
+		}
+		
+		return isDraw;
 	}
-
-	@Override
-	public Counter winningMove(Move lastMove, Board b) {
+	 	
+	public Counter winningMove(Move lastMove, Board b) {	// Checks whether or not, with the current board, one of the players has won and, if so, returns the colour of the winner
 		boolean won = false;
 		winner = Counter.EMPTY; // No ha ganado nadie
 		 
@@ -46,8 +70,10 @@ public class ComplicaRules implements GameRules {
 							// Devuelve Empty si no ha ganado nadie
 	}
 	
-
-
+	public Counter initialPlayer() {
+		return Counter.WHITE;
+	}
+ 
 	public Counter nextTurn(Counter lastMove, Board b) {
 		Counter nextTurn = Counter.EMPTY;
 		
@@ -61,40 +87,32 @@ public class ComplicaRules implements GameRules {
 		return nextTurn;
 	}
 	
-	public Counter initialPlayer() {
-		return Counter.WHITE;
-	}
-	
+	/**************************************/
+	/************ EXTRA METHODS ***********/
+	/**************************************/
+
 	public boolean checkHorizontal(Board board) {
 		boolean isWinner = false;
 		int tilesCounter, y, x;
 		Counter counter, nextCounter;
-		int whiteCounter= 0;
-		int blackCounter = 0;
-		int dimX = dimx;
 		
-		y = dimy; // Starts at bottom
+		y = dimY; // Starts at bottom
 		
-		while(y >= 1) 
+		while((y >= 1) && (!isWinner)) 
 		{	
 			tilesCounter = 1; // Reset counter
 			x = 1; // Starts at first position
 			counter = board.getPosition(x, y); // Color of first cell on each iteration
 			
-			while (x < dimX)
+			while ((x < dimX) && (!isWinner)) 
 			{
 				nextCounter = board.getPosition(x + 1, y);
 				
 				if ((counter == nextCounter) && (counter != Counter.EMPTY)) {
 					tilesCounter++;
 					if (tilesCounter == Resources.TILES_TO_WIN) {
-						if (counter.equals(Counter.BLACK)){
-							blackCounter++;
-						}
-						else if (counter.equals(Counter.WHITE)){
-							whiteCounter++;
-						}
-						tilesCounter = 1;
+						isWinner = true;
+						this.winner = counter; // no se si esta linea se deja como antes o simplemente lo actualizamos desde fuera
 					}
 				}
 				else {
@@ -106,46 +124,31 @@ public class ComplicaRules implements GameRules {
 			}			
 			y--; // Decrease the row (from bottom to top)
 		}
-		if ((blackCounter > 0) && (whiteCounter > 0)){
-			isWinner = false;
-		}
-		else {
-			isWinner = true;
-		}
-		
 		return isWinner;
 	}
-	
+
 	public boolean checkVertical(Board board) {
 		boolean isWinner = false;
 		int tilesCounter, y, x;
 		Counter counter, nextCounter;
-		int dimX = dimx;
-		int whiteCounter= 0;
-		int blackCounter = 0;
-		
+ 		
 		x = 1;
 		
-		while(x <= dimX) 
+		while((x <= dimX) && (!isWinner)) 
 		{
 			tilesCounter = 1; // Reset counter
 			y = board.getHeight(); // Start at bottom
 			counter = board.getPosition(x, y); // Color of first cell on each iteration
 			
-			while(y > 1)  
+			while((y > 1) && (!isWinner))  
 			{
 				nextCounter = board.getPosition(x, y - 1); // take the color of row before
 				
 				if ((counter == nextCounter) && (counter != Counter.EMPTY)) {
 					tilesCounter++;
 					if (tilesCounter == Resources.TILES_TO_WIN) {
-						if (counter.equals(Counter.BLACK)){
-							blackCounter++;
-						}
-						else if (counter.equals(Counter.WHITE)){
-							whiteCounter++;
-						}
-						tilesCounter = 1;
+						isWinner = true;
+						this.winner = counter; // no se si esta linea se deja como antes o simplemente lo actualizamos desde fuera
 					}
 				}
 				else {
@@ -157,13 +160,6 @@ public class ComplicaRules implements GameRules {
 			}			
 			x++;
 		}
-		if ((blackCounter > 0) && (whiteCounter > 0)){
-			isWinner = false;
-		}
-		else {
-			isWinner = true;
-		}
-		
 		return isWinner;
 	}
 	
@@ -171,10 +167,6 @@ public class ComplicaRules implements GameRules {
 		boolean isWinner = false;
 		int y, x, tilesCounter, aux_Y, aux_X, numIterations;
 		Counter color, nextColor;
-		int dimX = dimx;
-		int dimY = dimy;
-		int whiteCounter= 0;
-		int blackCounter = 0;
 		
 		// starting bottom left position
 		// Checks diagonals until the first cell (1,1)
@@ -183,7 +175,7 @@ public class ComplicaRules implements GameRules {
 		y = 1; // Always start in the last row 
 		numIterations = y;
 		
-		while (y <= dimY) {
+		while ((y <= dimY) && !(isWinner)) {
 			x = 1;
 			aux_Y = y;
 			tilesCounter = 1;
@@ -193,20 +185,16 @@ public class ComplicaRules implements GameRules {
 				numIterations = dimX;
 			}
 			
-			while (x < numIterations) {
+			while ((x < numIterations) && !(isWinner)) {
 				color = board.getPosition(x, aux_Y);
 				nextColor = board.getPosition(x + 1, aux_Y - 1);
 				
 				if ((color == nextColor) && (color != Counter.EMPTY)) {
 					tilesCounter++;
 					if (tilesCounter == Resources.TILES_TO_WIN) {
-						if (color.equals(Counter.BLACK)){
-							blackCounter++;
-						}
-						else if (color.equals(Counter.WHITE)){
-							whiteCounter++;
-						}
-						tilesCounter = 1;
+						isWinner = true;
+//						finished = true;
+						this.winner = color;
 					}
 				}
 				else
@@ -229,7 +217,7 @@ public class ComplicaRules implements GameRules {
 			color = board.getPosition(x, y);
 			int counter = 1;
 			
-			while (x > 1) {
+			while ((x > 1) && !(isWinner)) {
 				y = dimY;
 				aux_X = x;
 				tilesCounter = 1;
@@ -239,20 +227,16 @@ public class ComplicaRules implements GameRules {
 					numIterations = dimY;
 				}
 				counter = 1;
-				while (counter < numIterations){
+				while ((counter < numIterations) && !(isWinner)) {
 					color = board.getPosition(aux_X, y);
 					nextColor = board.getPosition(aux_X + 1, y - 1);
 					
 					if ((color == nextColor) && (color != Counter.EMPTY)) {
 						tilesCounter++;
 						if (tilesCounter == Resources.TILES_TO_WIN) {
-							if (color.equals(Counter.BLACK)){
-								blackCounter++;
-							}
-							else if (color.equals(Counter.WHITE)){
-								whiteCounter++;
-							}
-							tilesCounter = 1;
+							isWinner = true;
+//							finished = true;
+							this.winner = color;
 						}
 					}
 					else
@@ -268,13 +252,6 @@ public class ComplicaRules implements GameRules {
 			}			
 		}
 		
-		if ((blackCounter > 0) && (whiteCounter > 0)){
-			isWinner = false;
-		}
-		else {
-			isWinner = true;
-		}
-		
 		return isWinner;
 	}
 	
@@ -282,39 +259,33 @@ public class ComplicaRules implements GameRules {
 		boolean isWinner = false;
 		int y, x, tilesCounter, aux_X, aux_Y, numIterations;
 		Counter color, nextColor;
-		int whiteCounter= 0;
-		int blackCounter = 0;
 		
 		y = 1; // Always start in the firt row
-		x = dimx; // Always start in the last column
+		x = dimX; // Always start in the last column
 		color = board.getPosition(x, y);
 		numIterations = 1;
 		// starting top right position
 		// Checks until the first diagonal
 		
-		while (x > 1){
+		while ((x > 1) && !(isWinner)) {
 			y = 1;
 			aux_X = x;
 			tilesCounter = 1;
-			if (numIterations > Resources.DIMY_COMPLICA)
+			if (numIterations > dimX)
 			{
-				numIterations = Resources.DIMY_COMPLICA;
+				numIterations = dimX;
 			}
 			
-			while (y < numIterations) { // o aqui
+			while ((y < numIterations) && !(isWinner)) { // o aqui
 				color = board.getPosition(aux_X, y);
 				nextColor = board.getPosition(aux_X + 1, y + 1);
 				
 				if ((color == nextColor) && (color != Counter.EMPTY)) {
 					tilesCounter++;
 					if (tilesCounter == Resources.TILES_TO_WIN) {
-						if (color.equals(Counter.BLACK)){
-							blackCounter++;
-						}
-						else if (color.equals(Counter.WHITE)){
-							whiteCounter++;
-						}
-						tilesCounter = 1;
+						isWinner = true;
+//						finished = true;
+						this.winner = color;
 					}
 				}
 				else
@@ -333,17 +304,17 @@ public class ComplicaRules implements GameRules {
 			// Checks diagonals to bottom
 
 			x = 1; // Always start in the first column
-			y = Resources.DIMY_COMPLICA; // Always start in the firt row
+			y = dimY; // Always start in the firt row
 			color = board.getPosition(x, y);
 			
-			while (y >= 1) {
+			while ((y >= 1) && !(isWinner)) {
 				x = 1;
 				aux_Y = y;
 				tilesCounter = 1;
-				numIterations = Resources.DIMY_COMPLICA - y + 1;//antes era width y sin el +1
-				if (numIterations > Resources.DIMX_COMPLICA)
+				numIterations = dimY - y + 1;//antes era width y sin el +1
+				if (numIterations > dimY)
 				{
-					numIterations = Resources.DIMX_COMPLICA;
+					numIterations = dimY;
 				}
 				
 				while ((x < numIterations) && !(isWinner)) {//<=
@@ -353,13 +324,9 @@ public class ComplicaRules implements GameRules {
 					if ((color == nextColor) && (color != Counter.EMPTY)) {
 						tilesCounter++;
 						if (tilesCounter == Resources.TILES_TO_WIN) {
-							if (color.equals(Counter.BLACK)){
-								blackCounter++;
-							}
-							else if (color.equals(Counter.WHITE)){
-								whiteCounter++;
-							}
-							tilesCounter = 1;
+							isWinner = true;
+//							finished = true;
+							this.winner = color;
 						}
 					}
 					else
@@ -373,14 +340,9 @@ public class ComplicaRules implements GameRules {
 			}			
 		}
 		
-		if ((blackCounter > 0) && (whiteCounter > 0)){
-			isWinner = false;
-		}
-		else {
-			isWinner = true;
-		}
-		
 		return isWinner;
 	}
-
+	
 }
+
+
