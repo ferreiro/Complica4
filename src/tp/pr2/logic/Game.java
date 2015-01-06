@@ -29,7 +29,7 @@ public class Game {
 		if (valid) { // Aquí hay que llamar a varios métodos de las rules para que hagan su mierda.
 			
 			increaseStack(mov);
-			 
+			this.turn = rules.nextTurn(mov.currentPlayer, board);
 			
 // 			No creo que esto vaya aquí
 //			if (rules.isDraw(mov.currentPlayer, board)) {
