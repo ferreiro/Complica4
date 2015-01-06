@@ -63,7 +63,7 @@ public class Resources {
 //			 words[2] (move)
 //	
 	
-	public static int menu(Game game, Scanner input) {
+public static int menu(Game game, Scanner input) {
 		int option = - 1;
 		String optionString = "";
 		String lowerCaseStr;
@@ -76,39 +76,81 @@ public class Resources {
 			System.out.print ("Please enter a command: ");
 
 			optionString = input.nextLine().toUpperCase();
+			lowerCaseStr = optionString.toLowerCase();
+			String[] words = optionString.split(" ");
 
-			if (optionString.equals("MAKE A MOVE"))
+			if (words.length == 1)
 			{
-				option = 0;
+				if (words[0].equals("UNDO"))
+				{
+					option = 1;
+				}
+				else if (words[0].equals("RESTART"))
+				{
+					option = 2;
+				}
+				else if (words[0].equals("EXIT"))
+				{
+					option = 3;
+				}
+				else
+				{
+					System.err.println(lowerCaseStr + ": command not understood, please try again");
+				}
 			}
-			else if (optionString.equals("UNDO"))
+			else if (words.length == 2)
 			{
-				option = 1;
+				if (words[0].equals("PLAY"))
+				{
+					if (words[1].equals("C4"))
+					{
+						option = 4;
+					}
+					else if (words[1].equals("CO"))
+					{
+						option = 5;
+					}
+					else
+					{
+						System.err.println(lowerCaseStr + ": command not understood, please try again");
+					}
+				}
+				else
+				{
+					System.err.println(lowerCaseStr + ": command not understood, please try again");
+				}
 			}
-			else if (optionString.equals("RESTART"))
+			else if (words.length == 3)
 			{
-				option = 2;
-			}
-			else if (optionString.equals("EXIT"))
-			{
-				option = 3;
-			}
-			else if (optionString.equals("PLAY"))
-			{
-				System.err.println("No te entiendo"); 
-			}
-			else if (optionString.equals("PLAY C4"))
-			{
-				option = 4;
-			}
-			else if (optionString.equals("PLAY CO"))
-			{
-				option = 5;
+				if (words[0].equals("MAKE"))
+				{
+					if (words[1].equals("A"))
+					{
+						if (words[2].equals("MOVE"))
+						{
+							option = 0;
+						}
+						else
+						{
+							System.err.println(lowerCaseStr + ": command not understood, please try again");
+						}
+							
+					}
+					else
+					{
+						System.err.println(lowerCaseStr + ": command not understood, please try again");
+					}
+					
+				}
+				else
+				{
+					System.err.println(lowerCaseStr + ": command not understood, please try again");
+				}
+				
 			}
 			else
 			{
-				lowerCaseStr = optionString.toLowerCase();
-				System.err.print(lowerCaseStr + ": command not understood, please try again");
+				System.err.println(lowerCaseStr + ": command not understood, please try again");
 			}
 			
 			if ((option >= 0) && (option <= 5)) {
