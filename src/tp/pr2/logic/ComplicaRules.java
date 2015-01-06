@@ -6,6 +6,7 @@ import tp.pr2.Resources.Resources;
 public class ComplicaRules implements GameRules {
 	private int dimx = Resources.DIMX_COMPLICA;
 	private int dimy = Resources.DIMY_COMPLICA;
+	private Counter winner;
 
 	// Override
 	// Build a board that is to be used in the game, according to the rules of that game.
@@ -18,15 +19,33 @@ public class ComplicaRules implements GameRules {
 	// Consulta si hay empate. tablas(Ficha ultimoEnPoner, Tablero t) 
 	
 	public boolean isDraw(Counter lastMove, Board b) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public Counter winningMove(Move lastMove, Board b) {
-		// TODO Auto-generated method stub
-		return null;
+		boolean won = false;
+		winner = Counter.EMPTY; // No ha ganado nadie
+		 
+		// LastMove?? Puede ser para actualizar el tablero con ese movimiento?
+		//Ni idea tio
+		
+		won = checkHorizontal(b);
+		
+		if (!won) {
+			won = checkVertical(b);
+			if (!won) {
+				won = checkDiagonal1(b);
+				if (!won) {
+					won = checkDiagonal2(b);
+				}
+			}
+		} 
+			
+		return this.winner; // El color del ganador lo actualizan las funciones: checkhorizontal, etc... Actualizan el atributo winner
+							// Devuelve Empty si no ha ganado nadie
 	}
+	
 
 
 	public Counter nextTurn(Counter lastMove, Board b) {
@@ -52,9 +71,9 @@ public class ComplicaRules implements GameRules {
 		Counter counter, nextCounter;
 		int whiteCounter= 0;
 		int blackCounter = 0;
-		int dimX = Resources.DIMX_COMPLICA;
+		int dimX = dimx;
 		
-		y = Resources.DIMY_COMPLICA; // Starts at bottom
+		y = dimy; // Starts at bottom
 		
 		while(y >= 1) 
 		{	
@@ -89,9 +108,15 @@ public class ComplicaRules implements GameRules {
 		}
 		if ((blackCounter > 0) && (whiteCounter > 0)){
 			isWinner = false;
+			winner = Counter.EMPTY;
 		}
-		else {
+		else if ((blackCounter > 0) && (whiteCounter == 0)){
 			isWinner = true;
+			winner = Counter.BLACK;
+		}
+		else if ((blackCounter == 0) && (whiteCounter > 0)){
+			isWinner = true;
+			winner = Counter.WHITE;
 		}
 		
 		return isWinner;
@@ -101,7 +126,7 @@ public class ComplicaRules implements GameRules {
 		boolean isWinner = false;
 		int tilesCounter, y, x;
 		Counter counter, nextCounter;
-		int dimX = Resources.DIMX_COMPLICA;
+		int dimX = dimx;
 		int whiteCounter= 0;
 		int blackCounter = 0;
 		
@@ -140,9 +165,15 @@ public class ComplicaRules implements GameRules {
 		}
 		if ((blackCounter > 0) && (whiteCounter > 0)){
 			isWinner = false;
+			winner = Counter.EMPTY;
 		}
-		else {
+		else if ((blackCounter > 0) && (whiteCounter == 0)){
 			isWinner = true;
+			winner = Counter.BLACK;
+		}
+		else if ((blackCounter == 0) && (whiteCounter > 0)){
+			isWinner = true;
+			winner = Counter.WHITE;
 		}
 		
 		return isWinner;
@@ -152,8 +183,8 @@ public class ComplicaRules implements GameRules {
 		boolean isWinner = false;
 		int y, x, tilesCounter, aux_Y, aux_X, numIterations;
 		Counter color, nextColor;
-		int dimX = Resources.DIMX_COMPLICA;
-		int dimY = Resources.DIMY_COMPLICA;
+		int dimX = dimx;
+		int dimY = dimy;
 		int whiteCounter= 0;
 		int blackCounter = 0;
 		
@@ -251,9 +282,15 @@ public class ComplicaRules implements GameRules {
 		
 		if ((blackCounter > 0) && (whiteCounter > 0)){
 			isWinner = false;
+			winner = Counter.EMPTY;
 		}
-		else {
+		else if ((blackCounter > 0) && (whiteCounter == 0)){
 			isWinner = true;
+			winner = Counter.BLACK;
+		}
+		else if ((blackCounter == 0) && (whiteCounter > 0)){
+			isWinner = true;
+			winner = Counter.WHITE;
 		}
 		
 		return isWinner;
@@ -267,7 +304,7 @@ public class ComplicaRules implements GameRules {
 		int blackCounter = 0;
 		
 		y = 1; // Always start in the firt row
-		x = Resources.DIMX_COMPLICA; // Always start in the last column
+		x = dimx; // Always start in the last column
 		color = board.getPosition(x, y);
 		numIterations = 1;
 		// starting top right position
@@ -356,9 +393,15 @@ public class ComplicaRules implements GameRules {
 		
 		if ((blackCounter > 0) && (whiteCounter > 0)){
 			isWinner = false;
+			winner = Counter.EMPTY;
 		}
-		else {
+		else if ((blackCounter > 0) && (whiteCounter == 0)){
 			isWinner = true;
+			winner = Counter.BLACK;
+		}
+		else if ((blackCounter == 0) && (whiteCounter > 0)){
+			isWinner = true;
+			winner = Counter.WHITE;
 		}
 		
 		return isWinner;
