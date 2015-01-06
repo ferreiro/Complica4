@@ -38,7 +38,7 @@ public class Board {
 	}
 
 	public Counter getPosition(int tx, int ty){
-		return Counter.EMPTY;
+		return board[ty - 1][tx - 1];
 	}
 	
 	public void setPosition(int tx, int ty, Counter counter){
