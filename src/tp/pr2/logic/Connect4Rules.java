@@ -32,13 +32,13 @@ public class Connect4Rules implements GameRules {
 		}
 		
 		// Si ha ganado alguien, en conecta no hay empate.
-		// Si no ha ganado nadie, mira si el tablero est· lleno. Si lo est·, hay empate.
+		// Si no ha ganado nadie, mira si el tablero est√° lleno. Si lo est√°, hay empate.
 		
 		if (won) {
 			isDraw = false; // Un jugador ha ganado, por lo que no hay tablas
 		}
 		else {
-			won = b.isFull(); // comprueba si el tablero est· lleno (imagino que en complica habr· que cambiarlo.)
+			won = b.isFull(); // comprueba si el tablero est√° lleno (imagino que en complica habr√° que cambiarlo.)
 			if (won) {
 				isDraw = true; // empate
 			}
@@ -340,7 +340,7 @@ public class Connect4Rules implements GameRules {
 		}
 		
 		return isWinner;
-	}	
+	}
 	
 }
 
