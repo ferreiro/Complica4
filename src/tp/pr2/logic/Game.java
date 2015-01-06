@@ -51,7 +51,7 @@ public class Game {
 	}
 	
 	public void reset(GameRules rules) { // Reinicia las reglas del juego (los atributos de Game)
-
+		this.rules = rules;
 		board = rules.newBoard();
 		turn = rules.initialPlayer();
 		winner = Counter.EMPTY;
