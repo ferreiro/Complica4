@@ -42,10 +42,10 @@ public class Controller {
 				// we should check which type of move we are working with 
 				//depending on which game we are playing with a enum type
 				
-				if (gameRules.equals(Rules.CO)){
+				if (gameRules.equals(Rules.C4)){
 					move = new MoveConnect4(col, game.getTurn());
 				}
-				else if (gameRules.equals(Rules.C4)){
+				else if (gameRules.equals(Rules.CO)){
 					move = new MoveComplica(col, game.getTurn());
 				}
 				
