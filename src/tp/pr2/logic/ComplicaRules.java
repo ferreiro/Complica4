@@ -4,25 +4,22 @@ import tp.pr2.logic.Board;
 import tp.pr2.Resources.Resources;
 
 public class ComplicaRules implements GameRules {
-	private int dimx = Resources.DIMX_COMPLICA;
-	private int dimy = Resources.DIMY_COMPLICA;
+	private int dimX = Resources.DIMX_COMPLICA;
+	private int dimY = Resources.DIMY_COMPLICA;
 	private Counter winner;
 
-	// Override
-	// Build a board that is to be used in the game, according to the rules of that game.
+	public ComplicaRules() {  
+		winner = Counter.EMPTY; 
+	}
 	
 	public Board newBoard() {
-		return new Board(dimx, dimy);
+		return new Board(dimX, dimY);
 	}
-
-	// Override
-	// Consulta si hay empate. tablas(Ficha ultimoEnPoner, Tablero t) 
-	
+ 
 	public boolean isDraw(Counter lastMove, Board b) {
 		return false;
 	}
-
-	@Override
+ 
 	public Counter winningMove(Move lastMove, Board b) {
 		boolean won = false;
 		winner = Counter.EMPTY; // No ha ganado nadie
@@ -46,8 +43,6 @@ public class ComplicaRules implements GameRules {
 							// Devuelve Empty si no ha ganado nadie
 	}
 	
-
-
 	public Counter nextTurn(Counter lastMove, Board b) {
 		Counter nextTurn = Counter.EMPTY;
 		
@@ -64,6 +59,10 @@ public class ComplicaRules implements GameRules {
 	public Counter initialPlayer() {
 		return Counter.WHITE;
 	}
+
+	/**************************************/
+	/************ EXTRA METHODS ***********/
+	/**************************************/
 	
 	public boolean checkHorizontal(Board board) {
 		boolean isWinner = false;
@@ -71,9 +70,8 @@ public class ComplicaRules implements GameRules {
 		Counter counter, nextCounter;
 		int whiteCounter= 0;
 		int blackCounter = 0;
-		int dimX = dimx;
 		
-		y = dimy; // Starts at bottom
+		y = dimY; // Starts at bottom
 		
 		while(y >= 1) 
 		{	
@@ -125,8 +123,7 @@ public class ComplicaRules implements GameRules {
 	public boolean checkVertical(Board board) {
 		boolean isWinner = false;
 		int tilesCounter, y, x;
-		Counter counter, nextCounter;
-		int dimX = dimx;
+		Counter counter, nextCounter; 
 		int whiteCounter= 0;
 		int blackCounter = 0;
 		
@@ -182,9 +179,7 @@ public class ComplicaRules implements GameRules {
 	public boolean checkDiagonal1(Board board) {
 		boolean isWinner = false;
 		int y, x, tilesCounter, aux_Y, aux_X, numIterations;
-		Counter color, nextColor;
-		int dimX = dimx;
-		int dimY = dimy;
+		Counter color, nextColor; 
 		int whiteCounter= 0;
 		int blackCounter = 0;
 		
@@ -304,7 +299,7 @@ public class ComplicaRules implements GameRules {
 		int blackCounter = 0;
 		
 		y = 1; // Always start in the firt row
-		x = dimx; // Always start in the last column
+		x = dimX; // Always start in the last column
 		color = board.getPosition(x, y);
 		numIterations = 1;
 		// starting top right position
