@@ -52,6 +52,7 @@ public class Connect4Rules implements GameRules {
 		winner = Counter.EMPTY; // No ha ganado nadie
 		 
 		// LastMove?? Puede ser para actualizar el tablero con ese movimiento?
+		//Ni idea tio
 		
 		won = checkHorizontal(b);
 		
