@@ -10,7 +10,6 @@ public interface GameRules {
 	public boolean isDraw(Counter lastMove, Board b);
 								/* ^ LastMove?? Puede ser para actualizar el tablero con ese movimiento? */
 
-	
 	// Checks whether or not, with the current board, one of the players has won and, if so, returns the colour of the winner
 	public Counter winningMove(Move lastMove, Board b);
 	

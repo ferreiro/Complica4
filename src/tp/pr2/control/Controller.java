@@ -90,7 +90,6 @@ public class Controller {
 				break;
 			}
 			
-			
 			// If it's finished. Then exit the loop.
 			
 			if (game.isFinished()) 

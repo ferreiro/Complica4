@@ -13,28 +13,40 @@ public class Game {
 	private boolean finished;
 	private Move[] stack;
 	private int numUndo = 0; // si eso cambiamos la inicializacion
-	private GameRules rules;
+	protected GameRules rules;
 	
 	public Game(GameRules rules) {  
-		this.rules = rules;
-		reset(rules); // Inicializa los atributos según el juego.
+		this.rules = rules; 
+		reset(rules); // Crea un primer juego del tipo conecta4.
 	}
 
-	public boolean executeMove(Move mov){ 
-		boolean valid = false;
+	public boolean executeMove(Move mov){  
+		Counter wonColor;
+		boolean valid, isDraw; 
 		
 		valid = mov.executeMove(board);
-		// Aquí hay que llamar a varios métodos de las rules para que hagan su mierda.
-		// Por un lado, public Counter rules.winningMove(Move lastMove, Board b)
-		// => Si el counter que te devuelve, es distinto de EMPTY. Ha terminado el juego finished = true;
-		// => Si el counter no es distinto empty, llamamos a rules.isDraw() para ver si hay tablas o no
-		//    => Si hay tablas, finished = true;
-		// 	  => Si NO hay tablas, finishd = false y se podrá seguir jugando...
+	
+		if (valid) { // Aquí hay que llamar a varios métodos de las rules para que hagan su mierda.
+			
+			increaseStack(mov);
+			 
+			
+// 			No creo que esto vaya aquí
+//			if (rules.isDraw(mov.currentPlayer, board)) {
+//				// Hay tablas!
+//			}
+			
+			wonColor = rules.winningMove(mov, board); // Ver si ha ganado o n
+			if (wonColor != Counter.EMPTY) {
+				this.winner = wonColor;
+				finished = true;
+			}	
+		}
 		
 		return valid;
 	}
 	
-	public void reset(GameRules rules){ 
+	public void reset(GameRules rules) { 
 		// Reinicia las reglas del juego (los atributos de Game)
 		
 		board = rules.newBoard();
