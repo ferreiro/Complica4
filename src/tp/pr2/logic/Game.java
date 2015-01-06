@@ -17,7 +17,7 @@ public class Game {
 	
 	public Game(GameRules rules) { 
 		this.rules = rules; 
-		reset(rules); // Crea un primer juego del tipo conecta4.
+		reset(rules); // Crea un primer juego del tipo conecta4. 
 	}
 
 	public boolean executeMove(Move mov){  
@@ -31,16 +31,17 @@ public class Game {
 			increaseStack(mov);
 			this.turn = rules.nextTurn(mov.currentPlayer, board);
 			
-// 			No creo que esto vaya aquí
-//			if (rules.isDraw(mov.currentPlayer, board)) {
-//				// Hay tablas!
-//			}
-			
 			wonColor = rules.winningMove(mov, board); // Ver si ha ganado o n
 			if (wonColor != Counter.EMPTY) {
 				this.winner = wonColor;
 				finished = true;
 			}	
+			
+// 			No creo que esto vaya aquí
+//			if (rules.isDraw(mov.currentPlayer, board)) {
+//				// Hay tablas!
+//			}
+			
 		}
 		
 		return valid;

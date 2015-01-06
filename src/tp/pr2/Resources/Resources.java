@@ -76,7 +76,7 @@ public class Resources {
 			System.out.print ("Please enter a command: ");
 
 			optionString = input.nextLine().toUpperCase();
-			 
+
 			if (optionString.equals("MAKE A MOVE"))
 			{
 				option = 0;
@@ -93,13 +93,25 @@ public class Resources {
 			{
 				option = 3;
 			}
+			else if (optionString.equals("PLAY"))
+			{
+				System.err.println("No te entiendo"); 
+			}
+			else if (optionString.equals("PLAY C4"))
+			{
+				option = 4;
+			}
+			else if (optionString.equals("PLAY C0"))
+			{
+				option = 5;
+			}
 			else
 			{
 				lowerCaseStr = optionString.toLowerCase();
 				System.err.print(lowerCaseStr + ": command not understood, please try again");
 			}
 			
-			if ((option >= 0) && (option <= 3)) {
+			if ((option >= 0) && (option <= 5)) {
 				valid = true;
 			}
 		}

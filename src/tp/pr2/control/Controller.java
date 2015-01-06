@@ -1,15 +1,15 @@
 package tp.pr2.control;
 
 import java.util.Scanner;
-
+import tp.pr2.Resources.Resources;
+import tp.pr2.logic.ComplicaRules;
+import tp.pr2.logic.Connect4Rules;
 import tp.pr2.logic.Counter;
 import tp.pr2.logic.Game;
-import tp.pr2.logic.GameRules;
 import tp.pr2.logic.Move;
 import tp.pr2.logic.MoveComplica;
 import tp.pr2.logic.MoveConnect4;
 import tp.pr2.logic.Rules;
-import tp.pr2.Resources.Resources;
 
 public class Controller {
 	private Game game;
@@ -25,7 +25,7 @@ public class Controller {
 		boolean exit = false;
 		boolean valid = false;
 		boolean undo;
-		String basura;
+		String auxStr;
 		Rules gameRules = Rules.CO;
 		Move move = null;
 		
@@ -38,7 +38,7 @@ public class Controller {
 				// Make a move 
 				System.out.print("Please provide the column number: ");
 				col = this.in.nextInt();
-				basura = this.in.nextLine();
+				auxStr = this.in.nextLine();
 				// we should check which type of move we are working with 
 				//depending on which game we are playing with a enum type
 				
@@ -84,9 +84,12 @@ public class Controller {
 				
 			case 4://c4
 				gameRules = Rules.C4;
+				game.reset(new Connect4Rules());
 				break;
+				
 			case 5://co
 				gameRules = Rules.CO;
+				game.reset(new ComplicaRules());
 				break;
 			}
 			
