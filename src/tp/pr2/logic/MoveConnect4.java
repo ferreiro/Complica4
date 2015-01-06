@@ -34,7 +34,6 @@ public class MoveConnect4 extends Move {
 		
 		columnToUndo = column;
 		rowToUndo = Resources.occupiedRowPosition(board, columnToUndo); 
-		
-		board.setPosition(columnToUndo, rowToUndo, Counter.EMPTY);
+		board.setPosition(columnToUndo, rowToUndo, Counter.EMPTY); 
 	}
 }

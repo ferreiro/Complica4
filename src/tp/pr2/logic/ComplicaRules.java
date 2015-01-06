@@ -17,7 +17,7 @@ public class ComplicaRules implements GameRules {
 	}
  
 	public boolean isDraw(Counter lastMove, Board b) {
-		return false;
+		return false; // Nunca puede haber empate en complica.
 	}
  
 	public Counter winningMove(Move lastMove, Board b) {

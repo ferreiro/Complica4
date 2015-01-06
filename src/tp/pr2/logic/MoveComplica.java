@@ -48,9 +48,7 @@ public class MoveComplica extends Move{
 		else {
 			Resources.moveColumnUp(board, column);
 			board.setPosition(column, board.getHeight() - 1, lostMove);
-		}
-			
-		
+		}	
 	}
 	
 }
