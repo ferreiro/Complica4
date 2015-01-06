@@ -7,7 +7,7 @@ import tp.pr2.logic.Counter;
 import tp.pr2.logic.Game; 
 
 public class Resources {
-	
+	public static final int MAX_STACK = 10;
 	public static final int TILES_TO_WIN = 4;
 	public static final int DIMX_CONNECT4 = 7, DIMY_CONNECT4 = 6;
 	public static final int DIMX_COMPLICA = 7, DIMY_COMPLICA = 4;

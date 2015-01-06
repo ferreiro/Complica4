@@ -8,7 +8,7 @@ public class Connect4Rules implements GameRules {
 	private int dimY = Resources.DIMY_CONNECT4;
 	private Counter winner;
 	
-	public Connect4Rules() { // Constructor vacío?
+	public Connect4Rules() {  
 		winner = Counter.EMPTY; 
 	}
 	

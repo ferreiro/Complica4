@@ -15,7 +15,7 @@ public class Game {
 	private int numUndo = 0; // si eso cambiamos la inicializacion
 	protected GameRules rules;
 	
-	public Game(GameRules rules) {  
+	public Game(GameRules rules) { 
 		this.rules = rules; 
 		reset(rules); // Crea un primer juego del tipo conecta4.
 	}
@@ -53,7 +53,7 @@ public class Game {
 		turn = rules.initialPlayer();
 		winner = Counter.EMPTY;
 		finished = false;
-		stack = new Move[10]; // NO sé si está bien: Crear un array de 10 movimientos?
+		stack = new Move[Resources.MAX_STACK]; // NO sé si está bien: Crear un array de 10 movimientos?
 		numUndo = 0;	
 	}
 	
@@ -70,8 +70,10 @@ public class Game {
 	}
 	
 	public void increaseStack(Move movement) {
-		stack[numUndo] = movement;
-		numUndo++;
+		if (numUndo < Resources.MAX_STACK ) {
+			stack[numUndo] = movement;
+			numUndo++;
+		}
 	}
 	
 	// Getters and setters 
