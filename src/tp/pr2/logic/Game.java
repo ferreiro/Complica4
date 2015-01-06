@@ -20,36 +20,38 @@ public class Game {
 		reset(rules); // Crea un primer juego del tipo conecta4. 
 	}
 
-	public boolean executeMove(Move mov){  
+	public boolean executeMove(Move mov) {  
 		Counter wonColor;
-		boolean valid, isDraw; 
+		boolean valid, draw; 
 		
 		valid = mov.executeMove(board);
 	
-		if (valid) { // Aquí hay que llamar a varios métodos de las rules para que hagan su mierda.
+		if (valid) { 
 			
-			increaseStack(mov);
-			this.turn = rules.nextTurn(mov.currentPlayer, board);
+			wonColor = rules.winningMove(mov, board); // Importante! Primero hay que llamar a esta, para
+													  // que actualice el color del ganador!
+			draw = rules.isDraw(mov.currentPlayer, board); // Hay empate?
+			turn = rules.nextTurn(mov.currentPlayer, board); // Cambiar el turno.
 			
-			wonColor = rules.winningMove(mov, board); // Ver si ha ganado o n
-			if (wonColor != Counter.EMPTY) {
-				this.winner = wonColor;
-				finished = true;
-			}	
-			
-// 			No creo que esto vaya aquí
-//			if (rules.isDraw(mov.currentPlayer, board)) {
-//				// Hay tablas!
-//			}
-			
+			if (draw) {
+				finished = true; // hay empate, terminar
+				winner = Counter.EMPTY;
+			}
+			else {
+				if (wonColor == Counter.EMPTY) {
+					increaseStack(mov); // Si no gana nadie, guardar movimiento
+				}
+				else if (wonColor != Counter.EMPTY) {
+					this.winner = wonColor;
+					finished = true;
+				} 
+			}
 		}
-		
 		return valid;
 	}
 	
-	public void reset(GameRules rules) { 
-		// Reinicia las reglas del juego (los atributos de Game)
-		
+	public void reset(GameRules rules) { // Reinicia las reglas del juego (los atributos de Game)
+
 		board = rules.newBoard();
 		turn = rules.initialPlayer();
 		winner = Counter.EMPTY;
@@ -60,13 +62,19 @@ public class Game {
 	
 	//  Undo and stack 
 	
-	public boolean undo(){
+	public boolean undo() {
 		boolean success = false;
+		Move previousMove;
+		
 		if (numUndo > 0) {
+			previousMove = stack[numUndo - 1]; // local variable con el movimiento anterior
+
+			numUndo--;			
 			success = true;
-			stack[numUndo - 1].undo(board);
-			numUndo--;
+			previousMove.undo(board); 
+			turn = previousMove.currentPlayer; // Bug fixed!!! Actualizar el color del jugador!
 		}
+		
 		return success;
 	}
 	
@@ -90,7 +98,7 @@ public class Game {
 	public Board getBoard(){
 		return this.board;
 	}
-	
+
 	public Counter getTurn(){
 		return this.turn;
 	}
