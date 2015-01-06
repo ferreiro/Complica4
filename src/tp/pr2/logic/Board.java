@@ -45,11 +45,11 @@ public class Board {
 		board[ty - 1][tx - 1] = counter;
 	}
 	
-	public boolean isFull() {
-		return this.full;
+	public void setFull(Boolean full) {
+		this.full = full;
 	}
 	
-	public void setFull() {
+	public boolean isFull() {
 		int y = 1, x = 1;
 		boolean fullB = true;
 		while((y <= height) && (fullB)) {
@@ -62,6 +62,7 @@ public class Board {
 			y++;
 		}
 		this.full = fullB;
+		return fullB;
 	}
 	
 	public void emptyCells() {
