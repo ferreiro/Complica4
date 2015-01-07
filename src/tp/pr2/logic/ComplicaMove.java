@@ -18,7 +18,7 @@ public class ComplicaMove extends Move {
 		int firstFreeRow = 1;
 		lostMove = Counter.EMPTY;
 
-			if ((column >= 1) && (column <= Resources.DIMX_CONNECT4)) {				
+			if ((column >= 1) && (column <= Resources.DIMX_COMPLICA)) {				
 				firstFreeRow = Resources.freeRowPosition(column, board); // hay que cambiar esto
 
 					if (!board.isFull()) {
