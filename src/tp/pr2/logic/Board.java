@@ -49,7 +49,9 @@ public class Board {
 	}
 	
 	public void setPosition(int tx, int ty, Counter counter){
-		board[ty - 1][tx - 1] = counter;
+		if ((tx >= 1 && tx <= width) || (ty >= 1 && ty <= height)) {
+			board[ty - 1][tx - 1] = counter;
+		}
 	}
 	
 	public void setFull(Boolean full) {
