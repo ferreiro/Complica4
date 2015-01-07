@@ -84,7 +84,7 @@ public class Game {
 	}
 	
 	public void increaseStack(Move movement) {
-		if (numUndo < Resources.MAX_STACK ) {
+		if (numUndo < rules.getDimX() * rules.getDimY() ) {
 			stack[numUndo] = movement;
 			numUndo++;
 		}
