@@ -175,14 +175,14 @@ public static int menu(Game game, Scanner input) {
 	
 	public static void moveColumnDown(Board board, int column)
 	{
-		for (int i = 0; i < board.getHeight() - 1; i++)
+		for (int i = 1; i < board.getHeight(); i++)
 		{
-			board.setPosition(column , i+2, board.getPosition(column , i+1));// le reste uno a la columna porque creo que no estaba aun implementado
+			board.setPosition(column , i+1, board.getPosition(column , i));// le reste uno a la columna porque creo que no estaba aun implementado
 		}
 	}
 	public static void moveColumnUp(Board board, int column)
 	{
-		for (int i = board.getHeight() - 1; i < 0; i--)
+		for (int i = board.getHeight() ; i > 1; i--)
 		{
 			board.setPosition(column, i-1, board.getPosition(column, i));
 		}
