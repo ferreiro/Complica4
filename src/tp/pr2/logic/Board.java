@@ -74,6 +74,19 @@ public class Board {
 		return fullB;
 	}
 	
+	public boolean isFullColumn(int Column) {
+		int i = 1, j = Column;
+		boolean fullColumn = true;
+
+		while ((i <= height) && (fullColumn)) {
+			if (getPosition(i, j) == Counter.EMPTY) {
+				fullColumn = false;
+			}			
+			i++;
+		}
+		return fullColumn;
+	}
+	
 	public void emptyCells() {
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
