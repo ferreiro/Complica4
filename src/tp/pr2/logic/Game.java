@@ -24,8 +24,9 @@ public class Game {
 		Counter wonColor;
 		boolean valid = false, draw; 
 		
-		if (mov.currentPlayer == turn) { // No puede permitir hacer movimientos fuera de turno
+		if ((mov.currentPlayer == turn) && (!finished)) { // No puede permitir hacer movimientos fuera de turno o se ha terminado el juego
 			
+			finished = false;
 			valid = mov.executeMove(board);
 			
 			if (valid) { 
@@ -33,7 +34,6 @@ public class Game {
 				wonColor = rules.winningMove(mov, board); // Importante! Primero hay que llamar a esta, para
 														  // que actualice el color del ganador!
 				draw = rules.isDraw(mov.currentPlayer, board); // Hay empate?
-				turn = rules.nextTurn(mov.currentPlayer, board); // Cambiar el turno.
 				
 				if (draw) {
 					finished = true; // hay empate, terminar
@@ -42,6 +42,7 @@ public class Game {
 				else {
 					if (wonColor == Counter.EMPTY) {
 						increaseStack(mov); // Si no gana nadie, guardar movimiento
+						turn = rules.nextTurn(mov.currentPlayer, board); // Cambiar el turno.
 					}
 					else if (wonColor != Counter.EMPTY) {
 						this.winner = wonColor;
