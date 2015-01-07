@@ -26,6 +26,7 @@ public class Game {
 		
 		if ((mov.currentPlayer == turn) && (!finished)) { // No puede permitir hacer movimientos fuera de turno o se ha terminado el juego
 			
+			winner = Counter.EMPTY;
 			finished = false;
 			valid = mov.executeMove(board);
 			
@@ -37,14 +38,14 @@ public class Game {
 				
 				if (draw) {
 					finished = true; // hay empate, terminar
-					winner = Counter.EMPTY;
+					this.winner = Counter.EMPTY;
 				}
 				else {
 					if (wonColor == Counter.EMPTY) {
 						increaseStack(mov); // Si no gana nadie, guardar movimiento
 						turn = rules.nextTurn(mov.currentPlayer, board); // Cambiar el turno.
 					}
-					else if (wonColor != Counter.EMPTY) {
+					else {
 						this.winner = wonColor;
 						finished = true;
 					} 
