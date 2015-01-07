@@ -1,12 +1,10 @@
 package tp.pr2.logic;
 
 import tp.pr2.Resources.Resources;
-import tp.pr2.logic.Counter;
-import tp.pr2.logic.Board;
 
-public class MoveConnect4 extends Move {
+public class Connect4Move extends Move {
 	 
-	public MoveConnect4(int column, Counter counter)
+	public Connect4Move(int column, Counter counter)
 	{
 		super(counter, column); 
 	}

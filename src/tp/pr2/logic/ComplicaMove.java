@@ -2,12 +2,13 @@ package tp.pr2.logic;
 
 import tp.pr2.Resources.Resources;
 
-public class MoveComplica extends Move{
+
+public class ComplicaMove extends Move {
 //	Elultimo movimiento perdido
 	protected Counter lostMove; 
 	
 	//constructor MovimientoComplica(int donde, Ficha color)
-	public MoveComplica(int column, Counter counter)
+	public ComplicaMove(int column, Counter counter)
 	{
 		super(counter, column); 
 	}

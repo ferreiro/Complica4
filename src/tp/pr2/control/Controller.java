@@ -1,14 +1,15 @@
 package tp.pr2.control;
 
 import java.util.Scanner;
+
 import tp.pr2.Resources.Resources;
 import tp.pr2.logic.ComplicaRules;
+import tp.pr2.logic.Connect4Move;
 import tp.pr2.logic.Connect4Rules;
 import tp.pr2.logic.Counter;
 import tp.pr2.logic.Game;
 import tp.pr2.logic.Move;
-import tp.pr2.logic.MoveComplica;
-import tp.pr2.logic.MoveConnect4;
+import tp.pr2.logic.ComplicaMove;
 import tp.pr2.logic.Rules;
 
 public class Controller {
@@ -43,10 +44,10 @@ public class Controller {
 				//depending on which game we are playing with a enum type
 				
 				if (gameRules.equals(Rules.C4)){
-					move = new MoveConnect4(col, game.getTurn());
+					move = new Connect4Move(col, game.getTurn());
 				}
 				else if (gameRules.equals(Rules.CO)){
-					move = new MoveComplica(col, game.getTurn());
+					move = new ComplicaMove(col, game.getTurn());
 				}
 				
 				valid = game.executeMove(move);
