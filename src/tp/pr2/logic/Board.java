@@ -37,8 +37,15 @@ public class Board {
 		return width;
 	}
 
-	public Counter getPosition(int tx, int ty){
-		return board[ty - 1][tx - 1];
+//	public Counter getPosition(int tx, int ty){
+//		return board[ty - 1][tx - 1];
+//	}
+	public Counter getPosition(int x, int y) {
+		Counter color = Counter.EMPTY;
+		if ((x >= 1 && x <= width) || (y >= 1 && y <= height)) {
+			color = board[y - 1][x - 1];
+		}
+		return color;		
 	}
 	
 	public void setPosition(int tx, int ty, Counter counter){
