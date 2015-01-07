@@ -28,7 +28,8 @@ public class ComplicaMove extends Move {
 						}
 					}
 					else {
-						lostMove = board.getPosition(column, board.getHeight() - 1); 
+						validMove = true;
+						lostMove = board.getPosition(column, board.getHeight()); 
 						Resources.moveColumnDown(board, column);
 						board.setPosition(column, 1, currentPlayer);
 					}
