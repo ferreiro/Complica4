@@ -22,31 +22,35 @@ public class Game {
 
 	public boolean executeMove(Move mov) {  
 		Counter wonColor;
-		boolean valid, draw; 
+		boolean valid = false, draw; 
 		
-		valid = mov.executeMove(board);
-	
-		if (valid) { 
+		if (mov.currentPlayer == turn) { // No puede permitir hacer movimientos fuera de turno
 			
-			wonColor = rules.winningMove(mov, board); // Importante! Primero hay que llamar a esta, para
-													  // que actualice el color del ganador!
-			draw = rules.isDraw(mov.currentPlayer, board); // Hay empate?
-			turn = rules.nextTurn(mov.currentPlayer, board); // Cambiar el turno.
+			valid = mov.executeMove(board);
 			
-			if (draw) {
-				finished = true; // hay empate, terminar
-				winner = Counter.EMPTY;
-			}
-			else {
-				if (wonColor == Counter.EMPTY) {
-					increaseStack(mov); // Si no gana nadie, guardar movimiento
+			if (valid) { 
+				
+				wonColor = rules.winningMove(mov, board); // Importante! Primero hay que llamar a esta, para
+														  // que actualice el color del ganador!
+				draw = rules.isDraw(mov.currentPlayer, board); // Hay empate?
+				turn = rules.nextTurn(mov.currentPlayer, board); // Cambiar el turno.
+				
+				if (draw) {
+					finished = true; // hay empate, terminar
+					winner = Counter.EMPTY;
 				}
-				else if (wonColor != Counter.EMPTY) {
-					this.winner = wonColor;
-					finished = true;
-				} 
+				else {
+					if (wonColor == Counter.EMPTY) {
+						increaseStack(mov); // Si no gana nadie, guardar movimiento
+					}
+					else if (wonColor != Counter.EMPTY) {
+						this.winner = wonColor;
+						finished = true;
+					} 
+				}
 			}
 		}
+		
 		return valid;
 	}
 	
