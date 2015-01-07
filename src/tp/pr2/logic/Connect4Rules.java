@@ -71,9 +71,20 @@ public class Connect4Rules implements GameRules {
 		return nextTurn;
 	}
 	
-	/**************************************/
-	/************ EXTRA METHODS ***********/
-	/**************************************/
+	/*************************************/
+	/********* GETTERS / SETTERS *********/
+	/*************************************/
+
+	public int getDimX() {
+		return this.dimX;
+	}
+	public int getDimY() {
+		return this.dimY;
+	}
+	
+	/*************************************/
+	/*********** EXTRA METHODS ***********/
+	/*************************************/
 
 	public boolean checkHorizontal(Board board) {
 		boolean isWinner = false;

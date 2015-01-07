@@ -19,4 +19,9 @@ public interface GameRules {
 	// Returns the colour of the player whose turn it is.
 	public Counter nextTurn(Counter lastMove, Board b);
 	
+	// Getters and setters
+	public int getDimX();
+	public int getDimY();
+	
+	
 }

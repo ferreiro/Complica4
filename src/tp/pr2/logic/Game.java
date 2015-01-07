@@ -60,7 +60,7 @@ public class Game {
 		turn = rules.initialPlayer();
 		winner = Counter.EMPTY;
 		finished = false;
-		stack = new Move[Resources.MAX_STACK]; // NO sé si está bien: Crear un array de 10 movimientos?
+		stack = new Move[rules.getDimX() * rules.getDimY()]; // NO sé si está bien: Crear un array de 10 movimientos?
 		numUndo = 0;	
 	}
 	

@@ -60,6 +60,18 @@ public class ComplicaRules implements GameRules {
 		return Counter.WHITE;
 	}
 
+	
+	/*************************************/
+	/********* GETTERS / SETTERS *********/
+	/*************************************/
+
+	public int getDimX() {
+		return this.dimX;
+	}
+	public int getDimY() {
+		return this.dimY;
+	}
+	
 	/**************************************/
 	/************ EXTRA METHODS ***********/
 	/**************************************/
