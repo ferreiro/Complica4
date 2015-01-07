@@ -177,7 +177,7 @@ public static int menu(Game game, Scanner input) {
 	{
 		for (int i = 0; i < board.getHeight() - 1; i++)
 		{
-			board.setPosition(column, i+1, board.getPosition(column, i));
+			board.setPosition(column , i+2, board.getPosition(column , i+1));// le reste uno a la columna porque creo que no estaba aun implementado
 		}
 	}
 	public static void moveColumnUp(Board board, int column)
