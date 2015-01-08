@@ -7,11 +7,11 @@ import tp.pr2.logic.Counter;
 import tp.pr2.logic.Game; 
 
 public class Resources {
-	public static final int MAX_STACK = 10;
+	public static final int MAX_STACK = 100;
 	public static final int TILES_TO_WIN = 4;
 	// public static final int DIMX_CONNECT4 = 2, DIMY_CONNECT4 = 2;
 	public static final int DIMX_CONNECT4 = 7, DIMY_CONNECT4 = 6;
-	// public static final int DIMX_COMPLICA = 2, DIMY_COMPLICA = 2;
+//	public static final int DIMX_COMPLICA = 2, DIMY_COMPLICA = 2;
 	public static final int DIMX_COMPLICA = 4, DIMY_COMPLICA = 7;
 
 	public static int freeRowPosition(int col, Board board) {
@@ -175,16 +175,15 @@ public static int menu(Game game, Scanner input) {
 	
 	public static void moveColumnDown(Board board, int column)
 	{
-		for (int i = 1; i < board.getHeight(); i++)
-		{
-			board.setPosition(column , i+1, board.getPosition(column , i));// le reste uno a la columna porque creo que no estaba aun implementado
+		for (int i = board.getHeight(); i > 1; i--) {
+			board.setPosition(column, i, board.getPosition(column , i - 1));
 		}
 	}
 	public static void moveColumnUp(Board board, int column)
 	{
-		for (int i = board.getHeight() ; i > 1; i--)
+		for (int i = 1 ; i < board.getHeight(); i++)
 		{
-			board.setPosition(column, i-1, board.getPosition(column, i));
+			board.setPosition(column, i, board.getPosition(column, i + 1));
 		}
 	}
 	

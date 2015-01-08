@@ -21,13 +21,11 @@ public class ComplicaMove extends Move {
 			if ((column >= 1) && (column <= Resources.DIMX_COMPLICA)) {				
 				firstFreeRow = Resources.freeRowPosition(column, board); // hay que cambiar esto
 
-				if (!board.isFull()) {
-					if (firstFreeRow > - 1) {
-						validMove = true;
-						board.setPosition(column, firstFreeRow, currentPlayer);
-					}
+				if (firstFreeRow > - 1) {
+					validMove = true;
+					board.setPosition(column, firstFreeRow, currentPlayer);
 				}
-				else {
+				else if (firstFreeRow == - 1) {
 					validMove = true;
 					lostMove = board.getPosition(column, board.getHeight()); 
 					Resources.moveColumnDown(board, column);
@@ -49,7 +47,7 @@ public class ComplicaMove extends Move {
 		}
 		else {
 			Resources.moveColumnUp(board, column);
-			board.setPosition(column, board.getHeight() - 1, lostMove);
+			board.setPosition(column, board.getHeight(), lostMove);
 		}	
 	}
 	
