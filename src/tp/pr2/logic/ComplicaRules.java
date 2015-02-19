@@ -7,6 +7,8 @@ public class ComplicaRules implements GameRules {
 	private int dimX = Resources.DIMX_COMPLICA;
 	private int dimY = Resources.DIMY_COMPLICA;
 	private Counter winner;
+	private int whiteCounter;
+	private int blackCounter;
 
 	public ComplicaRules() {  
 		winner = Counter.EMPTY; 
@@ -21,23 +23,24 @@ public class ComplicaRules implements GameRules {
 	}
  
 	public Counter winningMove(Move lastMove, Board b) {
-		boolean won = false;
 		winner = Counter.EMPTY; // No ha ganado nadie
+		blackCounter = 0;
+		whiteCounter = 0;
 		 
 		// LastMove?? Puede ser para actualizar el tablero con ese movimiento?
 		//Ni idea tio
 		
-		won = checkHorizontal(b);
+		checkHorizontal(b);
 		
-		if (!won) {
-			won = checkVertical(b);
-			if (!won) {
-				won = checkDiagonal1(b);
-				if (!won) {
-					won = checkDiagonal2(b);
+		if (!complicaFinished()) {
+			checkVertical(b);
+			if (!complicaFinished()) {
+				checkDiagonal1(b);
+				if (!complicaFinished()) {
+					checkDiagonal2(b);
 				}
 			}
-		} 
+		}
 			
 		return this.winner; // El color del ganador lo actualizan las funciones: checkhorizontal, etc... Actualizan el atributo winner
 							// Devuelve Empty si no ha ganado nadie
@@ -76,12 +79,9 @@ public class ComplicaRules implements GameRules {
 	/************ EXTRA METHODS ***********/
 	/**************************************/
 	
-	public boolean checkHorizontal(Board board) {
-		boolean isWinner = false;
+	public void checkHorizontal(Board board) {
 		int tilesCounter, y, x;
 		Counter counter, nextCounter;
-		int whiteCounter= 0;
-		int blackCounter = 0;
 		
 		y = dimY; // Starts at bottom
 		
@@ -116,28 +116,11 @@ public class ComplicaRules implements GameRules {
 			}			
 			y--; // Decrease the row (from bottom to top)
 		}
-		if ((blackCounter > 0) && (whiteCounter > 0)){
-			isWinner = false;
-			winner = Counter.EMPTY;
-		}
-		else if ((blackCounter > 0) && (whiteCounter == 0)){
-			isWinner = true;
-			winner = Counter.BLACK;
-		}
-		else if ((blackCounter == 0) && (whiteCounter > 0)){
-			isWinner = true;
-			winner = Counter.WHITE;
-		}
-		
-		return isWinner;
 	}
 	
-	public boolean checkVertical(Board board) {
-		boolean isWinner = false;
+	public void checkVertical(Board board) {
 		int tilesCounter, y, x;
 		Counter counter, nextCounter; 
-		int whiteCounter= 0;
-		int blackCounter = 0;
 		
 		x = 1;
 		
@@ -172,28 +155,11 @@ public class ComplicaRules implements GameRules {
 			}			
 			x++;
 		}
-		if ((blackCounter > 0) && (whiteCounter > 0)){
-			isWinner = false;
-			winner = Counter.EMPTY;
-		}
-		else if ((blackCounter > 0) && (whiteCounter == 0)){
-			isWinner = true;
-			winner = Counter.BLACK;
-		}
-		else if ((blackCounter == 0) && (whiteCounter > 0)){
-			isWinner = true;
-			winner = Counter.WHITE;
-		}
-		
-		return isWinner;
 	}
 	
-	public boolean checkDiagonal1(Board board) {
-		boolean isWinner = false;
+	public void checkDiagonal1(Board board) {
 		int y, x, tilesCounter, aux_Y, aux_X, numIterations;
 		Counter color, nextColor; 
-		int whiteCounter= 0;
-		int blackCounter = 0;
 		
 		// starting bottom left position
 		// Checks diagonals until the first cell (1,1)
@@ -239,7 +205,6 @@ public class ComplicaRules implements GameRules {
 			numIterations++;
 		}
 		
-		if (!isWinner) {
 			// starting at (height, height) ex: (5,5)
 			// Checks from bottom to top right
 	 
@@ -285,30 +250,13 @@ public class ComplicaRules implements GameRules {
 				}			
 				x--;
 			}			
-		}
-		
-		if ((blackCounter > 0) && (whiteCounter > 0)){
-			isWinner = false;
-			winner = Counter.EMPTY;
-		}
-		else if ((blackCounter > 0) && (whiteCounter == 0)){
-			isWinner = true;
-			winner = Counter.BLACK;
-		}
-		else if ((blackCounter == 0) && (whiteCounter > 0)){
-			isWinner = true;
-			winner = Counter.WHITE;
-		}
-		
-		return isWinner;
+
 	}
 	
-	public boolean checkDiagonal2(Board board) {
+	public void checkDiagonal2(Board board) {
 		boolean isWinner = false;
 		int y, x, tilesCounter, aux_X, aux_Y, numIterations;
 		Counter color, nextColor;
-		int whiteCounter= 0;
-		int blackCounter = 0;
 		
 		y = 1; // Always start in the firt row
 		x = dimX; // Always start in the last column
@@ -352,8 +300,6 @@ public class ComplicaRules implements GameRules {
 			x--;
 			numIterations++;
 		}
-		
-		if (!isWinner) {
 			// starting at (height, 1)
 			// Checks diagonals to bottom
 
@@ -396,22 +342,24 @@ public class ComplicaRules implements GameRules {
 				}			
 				y--;
 			}			
-		}
-		
-		if ((blackCounter > 0) && (whiteCounter > 0)){
-			isWinner = false;
-			winner = Counter.EMPTY;
-		}
-		else if ((blackCounter > 0) && (whiteCounter == 0)){
-			isWinner = true;
-			winner = Counter.BLACK;
-		}
-		else if ((blackCounter == 0) && (whiteCounter > 0)){
-			isWinner = true;
-			winner = Counter.WHITE;
-		}
-		
-		return isWinner;
 	}
 
+
+boolean complicaFinished(){
+	boolean isWinner = false;
+	
+	if ((blackCounter > 0) && (whiteCounter > 0)){
+		isWinner = false;
+		winner = Counter.EMPTY;
+	}
+	else if ((blackCounter > 0) && (whiteCounter == 0)){
+		isWinner = true;
+		winner = Counter.BLACK;
+	}
+	else if ((blackCounter == 0) && (whiteCounter > 0)){
+		isWinner = true;
+		winner = Counter.WHITE;
+	}	
+	return isWinner;
+}
 }
